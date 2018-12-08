@@ -10,6 +10,10 @@ public class BetterConsole implements Runnable
 	
 	protected List<String> slst = new LinkedList<>();
 	
+	/**
+	 * Enter a line of string, any \n character in the string will be replaced by ' '. 
+	 * @param strings
+	 */
 	public BetterConsole(String...strings)
 	{
 		for(String s : strings)
