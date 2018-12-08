@@ -27,6 +27,9 @@ public class Console implements Runnable{
 			con.setLine(s);
 			try{Thread.sleep(1000);}catch(Exception e){}
 		}
+		
+		con.finalize();
+		
 	}
 	
 	public static final String CR="\r"; // Carriage return. 
@@ -78,7 +81,7 @@ public class Console implements Runnable{
 	public void finalize()
 	{
 		this.flag = true; 
-		this.t.interrupt();
+		this.flag =true; 
 	}
 	
 
