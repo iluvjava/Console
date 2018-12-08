@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class ConsoleTest {
 	
-	Console subject = null; 
+	BetterConsole subject = null; 
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception 
@@ -20,8 +20,9 @@ public class ConsoleTest {
 	@Before
 	public void setUp() throws Exception 
 	{
-		this.subject = new Console("-------");
+		this.subject = new BetterConsole("-------","ttt");
 		Thread.sleep(5000);
+		this.subject.finalize();
 	}
 
 	@After

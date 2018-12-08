@@ -27,7 +27,6 @@ public class Console implements Runnable{
 			con.setLine(s);
 			try{Thread.sleep(1000);}catch(Exception e){}
 		}
-		
 		con.finalize();
 		
 	}
