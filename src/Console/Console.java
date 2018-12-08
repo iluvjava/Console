@@ -35,7 +35,7 @@ public class Console implements Runnable{
 	public static final String CR="\r"; // Carriage return. 
 	public static final String BS ="\b"; // Back Space
 	public static final int WIDTH = 30; // The width of the console window. 
-	public static final int DELAY = 40;
+	public static final int DELAY = 40; // refresh delay in ms 
 	
 	static PrintStream console = System.out; 
 	

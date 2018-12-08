@@ -1,12 +1,23 @@
 package Console;
 
-public class BetterConsole 
+import java.util.LinkedList;
+import java.util.List;
+
+public class BetterConsole implements Runnable
 {
-	private Console c  = null; // The one line console we are going to bridge 
+	private boolean flag = false; // True means stop refreshing. 
 	
-	public BetterConsole(String...strings )
+	protected List<String> slst = new LinkedList<>();
+	public BetterConsole(String...strings)
 	{
 		
 	}
-
+	public void run() {
+		
+	}
+	
+	
+	
+	
+	
 }
