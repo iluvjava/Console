@@ -10,6 +10,8 @@ public class BetterConsole implements Runnable
 	
 	protected List<String> slst = new LinkedList<>();
 	
+	private Thread t =new Thread(this);
+	
 	/**
 	 * Enter a line of string, any \n character in the string will be replaced by ' '. 
 	 * @param strings
@@ -30,6 +32,9 @@ public class BetterConsole implements Runnable
 		}
 	}
 	
+	/**
+	 * This method prints all lines store in this object. 
+	 */
 	private void printAll()
 	{
 		{
@@ -42,14 +47,17 @@ public class BetterConsole implements Runnable
 		}
 	}
 	
+	
+	
 	/**
 	 * 
 	 * @param index
 	 * The index of line 
 	 */
-	public synchronized void set(int index)
+	public synchronized BetterConsole set(int index, String s)
 	{
-		
+		this.slst.set(Math.abs(index%this.slst.size()), s);
+		return this;
 	}
 	
 	
