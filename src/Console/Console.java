@@ -11,23 +11,45 @@ import java.io.PrintStream;
  */
 public class Console implements Runnable{
 	
+	public static void main(String[] args)
+	{
+		StringBuilder sb = new StringBuilder("-");
+		Console con = new Console(sb.toString());
+		String[] lines = {"line1", "line2", "line3"};
+		for(int i =0; i<30;i++)
+		{
+			try{Thread.sleep(500);}catch(Exception e){};
+			sb.append("-");
+			con.setLine(sb.toString());
+		}
+		for(String s : lines)
+		{
+			con.setLine(s);
+			try{Thread.sleep(1000);}catch(Exception e){}
+		}
+	}
+	
 	public static final String CR="\r"; // Carriage return. 
 	public static final String BS ="\b"; // Back Space
 	public static final int WIDTH = 30; // The width of the console window. 
+	public static final int DELAY = 40;
 	
 	static PrintStream console = System.out; 
 	
 	private boolean flag = false; // true means stops refreshing. 
 	
 	Thread t = new Thread(this); // The thread that is refreshing items onto the console. 
-	String s = new String();
+	
+	volatile String s = new String(); // will be accessed by multiple thread. 
 	
 	@Override
 	public void run() 
 	{
 		while(!flag)
 		{
-
+			console.print(this.s);
+			try {Thread.sleep(DELAY);} catch (InterruptedException e) {e.printStackTrace();}
+			console.print(CR);
 		}
 	}
 	
@@ -39,6 +61,15 @@ public class Console implements Runnable{
 	{
 		this.s = String.format("%1$-"+WIDTH+"s", line);  // Setup the string with paddings. 
 		this.t.start();
+	}
+	
+	/**
+	 * Change the content of the line. 
+	 * @param s 
+	 */
+	public synchronized void setLine(String s)
+	{
+		this.s = String.format("%1$-"+WIDTH+"s", s); 
 	}
 	
 	/**
