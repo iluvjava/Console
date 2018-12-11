@@ -151,8 +151,24 @@ public class Banner implements Runnable{
 	
 	
 	
-	static class	MultiSequencer
+	/**
+	 * A different kind of animated horizontal string effect. <br>
+	 * Strings enter from the left, one letter by one letter, and exists from the right,
+	 * one letter by one letter. 
+	 * @author Administrator
+	 *
+	 */
+	static class LetterCascade implements BannerSequencer
 	{
+		
+		
+		
+
+		@Override
+		public String nextFrame() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 		
 		
 	}
