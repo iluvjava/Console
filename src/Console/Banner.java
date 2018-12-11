@@ -1,5 +1,6 @@
 package Console;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -161,7 +162,48 @@ public class Banner implements Runnable{
 	static class LetterCascade implements BannerSequencer
 	{
 		
+		private List<String> strlist = new LinkedList<>(); // the strlist can contain partition of empty string! 
 		
+		private int n = 0; // Index of the current partition that we are looking at. 
+		
+		
+		/**---Method Needs Testing--- <br>
+		 * str, a sting, it can be empty but there will also no animation. 
+		 * This method partition the string for according to the width of the console. 
+		 * @param str
+		 */
+		public LetterCascade(String str)
+		{
+			// split the str into string with equal length to the width of the console. 
+			int len = str.length();
+			
+			for(int i =0; i<len;i+=Console.WIDTH)
+			{
+				if(i+Console.WIDTH< str.length())
+				{
+					strlist.add(str.substring(i, i+Console.WIDTH));
+					continue;
+				}
+				strlist.add(str.substring(i));
+			}
+			
+			// pad the last string to the width of the console and remove all '\n'
+			{
+				// padding
+				int size = strlist.size();
+				strlist.set(size-1, String.format("%1$-"+Console.WIDTH+"s",strlist.get(size-1)));
+				//removing
+				List<String> newstrlist = new LinkedList<>();
+				while(!strlist.isEmpty())
+				{
+					newstrlist.add(strlist.remove(0));
+				}
+				
+				//Reestablish field. 
+				strlist = newstrlist;
+			}
+			
+		}
 		
 
 		@Override

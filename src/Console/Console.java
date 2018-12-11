@@ -31,6 +31,8 @@ public class Console implements Runnable{
 		
 	}
 	
+	
+	//	RECONPILE THE WHOLE PROJECT IF THESE PARAMETERS ARE CHANGED!!!!!!!!!!!!!!!
 	public static final String CR="\r"; // Carriage return. 
 	public static final String BS ="\b"; // Back Space
 	public static final int WIDTH = 30; // The width of the console window. 
