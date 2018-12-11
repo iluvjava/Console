@@ -3,8 +3,6 @@ package Console;
 import java.util.LinkedList;
 import java.util.List;
 
-import Console.Banner.Sequencer;
-
 /**
  * The banners moves text on a single line horizontally. It should have good API and stuff to make it easy to use. <br><br>
  * One instacnce of banner for one instance of sequence. 
@@ -24,21 +22,18 @@ public class Banner implements Runnable{
 	}
 
 	private boolean flag = false; // true means stop refreshing. 
-	private String[] content; 
+	private BannerSequencer sequence; 
 	private Thread t = new Thread(this); 
 	
 	/**
 	 * @param str strings of animation. 
 	 */
-	public Banner(String[] str)
-	{
-		content = str;
-		t.start();
-	}
 	
-	public Banner (Sequencer sq)
+	
+	public Banner (BannerSequencer sq)
 	{
-		this(sq.sequence.toArray(new String[sq.sequence.size()]));
+		sequence = sq;
+		t.start();
 	}
 	
 	
@@ -46,12 +41,8 @@ public class Banner implements Runnable{
 	{
 		while(!flag)
 		{
-			for(String s : this.content)
-			{
-				Console.console.print(s);
-				pause(100);
-				Console.console.print(Console.CR);
-			}
+			Console.console.print(sequence.nextFrame());
+			pause(200);
 		}
 	}
 	
@@ -72,26 +63,60 @@ public class Banner implements Runnable{
 		}
 	}
 	
+	
+	static interface BannerSequencer
+	{
+		/**
+		 * The return string has these two Properties: 
+		 * <br>
+		 * <ol>
+		 * <li>The string doesn't contain escape character (They should be stripped away when 
+		 * BannerSequencer instances are created)
+		 * <li>It should in the length of the width of the console specified in the Console class. 
+		 * </ol>
+		 * @return
+		 * A frame of the animated string for banner to display. 
+		 */
+		String nextFrame();
+	}
+	
+	
 	/**
 	 * Provides an animated sequence for a certain input string.<br><br>
 	 * It has the same name as sequencer in java. 
+	 * <br>
+	 * 
+	 * <b> Test Needed</b>
 	 * @author Administrator
 	 *
 	 */
-	static class Sequencer
+	static class Sequencer implements BannerSequencer
 	 {
+		
+		private int frameindex =0; 
 		 String source;
 		 List<String> sequence;
 		 /**
-		  * Takes a string and turn it into a sequence of strings for the banner class. 
+		  * Takes a string and turn it into a sequence of strings for the banner class. <br>
+		  * The string will be padded if shorter than the width of the console,
+		  * new line characters are replaced by space. 
 		  * @param s
 		  */
 		 public Sequencer(String s)
 		 {
-			 this.source = String.format("%1$-"+Console.WIDTH+"s", s); 
+			 // Padding 
+			 if(s.length()<Console.WIDTH)
+				 this.source = String.format("%1$-"+Console.WIDTH+"s", s); 
+			 //No padding if wider than the width. 
+			 else 
+				this.source = s;
+			 
+			 // Stripp away new line character
+			 source.replace('\n', ' ');
 			 construct();
 		 }
 		 
+		 //Construct and store the sequencer of animation. 
 		 private void construct()
 		 {
 			 char[] charlist = source.toCharArray(); 
@@ -113,6 +138,23 @@ public class Banner implements Runnable{
 			 sequence = res;
 		 }
 		 
+		 
+		 public String nextFrame()
+		 {
+			 String res = sequence.get(frameindex);
+			 frameindex = (frameindex+1)%sequence.size();
+			 return res; 
+		 }
+		 
+		 
 	 }
+	
+	
+	
+	static class	MultiSequencer
+	{
+		
+		
+	}
 	
 }

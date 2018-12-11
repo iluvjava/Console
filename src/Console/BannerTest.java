@@ -31,9 +31,13 @@ public class BannerTest {
 	public void test() 
 	{
 		
-		String s = "This string should contain more than 30 characters. ";
+		String s = "This string should contain more than 30 characters. <=exactly 30 character...";
 		Banner.Sequencer bseq = new Sequencer(s);
-		System.out.println(bseq.sequence);
+		System.out.println("This is the sequence: ");
+		for(int i = 0 ; i<= 40;i++)
+		{
+			System.out.println(bseq.nextFrame());
+		}
 		
 		Banner b = new Banner(bseq);
 		try {
@@ -44,5 +48,7 @@ public class BannerTest {
 		}
 		
 	}
+	
+	
 
 }
