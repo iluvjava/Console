@@ -162,10 +162,12 @@ public class Banner implements Runnable{
 	static class LetterCascade implements BannerSequencer
 	{
 		
-		private List<String> strlist = new LinkedList<>(); // the strlist can contain partition of empty string! 
+		protected List<String> strlist = new LinkedList<>(); // the strlist can contain partition of empty string! 
 		
-		private int n = 0; // Index of the current partition that we are looking at. 
-		
+		protected int n = 0; // Index of the current partition that we are looking at. 
+		protected int m = 0; // Index of the current letter in the string that we are trying to cascade. 
+		protected  char[] cascading;		// the sequence of characters we will when next frame is invoked. 
+		protected char[] current_str; // the string we are looking at. 
 		
 		/**---Method Needs Testing--- <br>
 		 * str, a sting, it can be empty but there will also no animation. 
@@ -204,6 +206,12 @@ public class Banner implements Runnable{
 			}
 			
 		}
+		
+		
+		
+		
+		
+		
 		
 
 		@Override
