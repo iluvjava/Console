@@ -31,7 +31,6 @@ public class BannerTest {
 	public void test() 
 	{
 		test1("This string should contain more than 30 characters. <=exactly 30 character...");
-		
 	}
 	
 	public void test1(String s)

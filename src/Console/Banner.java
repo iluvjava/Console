@@ -209,10 +209,7 @@ public class Banner implements Runnable{
 		
 		
 		
-		
-		
-		
-		
+	
 
 		@Override
 		public String nextFrame() {
