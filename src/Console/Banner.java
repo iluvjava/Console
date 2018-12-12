@@ -164,10 +164,13 @@ public class Banner implements Runnable{
 		
 		protected List<String> strlist = new LinkedList<>(); // the strlist can contain partition of empty string! 
 		
-		protected int n = 0; // Index of the current partition that we are looking at. 
-		protected int m = 0; // Index of the current letter in the string that we are trying to cascade. 
-		protected  char[] cascading;		// the sequence of characters we will when next frame is invoked. 
+		protected int partitionindex = 0; // Index of the current partition that we are looking at. 
+		protected int letterindex = 0; // Index of the current letter in the string that we are trying to cascade. 
+		protected int parkedindex= 0; //The right most index of the letter that parked on the array. 
+		protected  char[] cascading;		// the sequence of characters we will push when next frame is invoked. 
 		protected char[] current_str; // the string we are looking at. 
+		
+		protected int step = 0 ; // -_-
 		
 		/**---Method Needs Testing--- <br>
 		 * str, a sting, it can be empty but there will also no animation. 
@@ -205,6 +208,26 @@ public class Banner implements Runnable{
 				strlist = newstrlist;
 			}
 			
+			
+			//*********************************
+			//setup the other vars in the field: 
+			this.current_str = this.strlist.get(this.partitionindex).toCharArray();
+			this.cascading = new char[Console.WIDTH];
+			
+		}
+		
+		
+		
+		/**
+		 * Run and prepared the next frame. 
+		 */
+		protected void refresh()
+		{
+			//Find the index of the letter that is at the right most
+			
+			//Move the letter by one if it hasn't crashed into the parked index.
+			
+			//else: increment the parked index and move the next letter. 
 		}
 		
 		
@@ -213,7 +236,6 @@ public class Banner implements Runnable{
 
 		@Override
 		public String nextFrame() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
