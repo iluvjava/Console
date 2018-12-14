@@ -226,26 +226,28 @@ public class Banner implements Runnable{
 			//Find the index of the letter that is moving on the banner. 
 			int movingletter = getMovingLeter();
 			//Move the letter by one if it hasn't crashed into the parked index. 
-			
 			{
 				//Move the moving letter
 				if(movingletter!=this.parkedindex)
 				{
 					//Shift the letter one index to the left. 
-					
 					char pre = this.cascading[movingletter-1];
 					this.cascading[movingletter-1] = cascading[movingletter];
 					cascading[movingletter] =pre; 
-					
 				}
 				//The letter has been moved to the parked position. 
 				//Skipped the letter if it's a space character. 
+				//increment the parked index and move the next letter. 
 				else
 				{
-					
+					parkedindex++;
+					letterindex++;
+					if(current_str[letterindex]!=' ')
+					cascading[cascading.length-1]=current_str[letterindex];
+					else
+					cascading[parkedindex] = current_str[letterindex];
 				}
 			}
-			//else: increment the parked index and move the next letter. 
 		}
 		
 		
