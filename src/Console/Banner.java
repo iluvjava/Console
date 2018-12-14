@@ -223,14 +223,33 @@ public class Banner implements Runnable{
 		 */
 		protected void refresh()
 		{
-			//Find the index of the letter that is at the right most
-			
+			//Find the index of the letter that is moving on the banner. 
+			int movingletter = getMovingLeter();
 			//Move the letter by one if it hasn't crashed into the parked index. 
+			{
+				if(movingletter!=this.parkedindex)
+				{
+					
+				}
 				//Skipped the letter if it's a space character. 
-			
+			}
 			//else: increment the parked index and move the next letter. 
 		}
 		
+		
+		/**
+		 * 
+		 * @return the index of the last non empty char from the right. 
+		 * -1 if there is no such a character. -> an empty string. 
+		 */
+		protected int getMovingLeter()
+		{
+			for(int i = cascading.length;i>=0;i--)
+			{
+				if(cascading[i]!=' ')return i;
+			}
+			return -1;
+		}
 		
 		
 	
