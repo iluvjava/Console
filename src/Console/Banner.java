@@ -225,7 +225,8 @@ public class Banner implements Runnable{
 		{
 			//Find the index of the letter that is at the right most
 			
-			//Move the letter by one if it hasn't crashed into the parked index.
+			//Move the letter by one if it hasn't crashed into the parked index. 
+				//Skipped the letter if it's a space character. 
 			
 			//else: increment the parked index and move the next letter. 
 		}
