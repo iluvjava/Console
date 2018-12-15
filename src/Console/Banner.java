@@ -76,7 +76,7 @@ public class Banner implements Runnable{
 		 * <li>It should in the length of the width of the console specified in the Console class. 
 		 * </ol>
 		 * @return
-		 * A frame of the animated string for banner to display. 
+		 * A frame of the animated string for banner to display. Null to end the sequence. 
 		 */
 		String nextFrame();
 	}
@@ -165,8 +165,12 @@ public class Banner implements Runnable{
 		protected List<String> strlist = new LinkedList<>(); // the strlist can contain partition of empty string! 
 		
 		protected int partitionindex = 0; // Index of the current partition that we are looking at. 
-		protected int letterindex = 0; // Index of the current letter in the string that we are trying to cascade. 
+		
+		//protected int letterindex = 0; // Index of the current letter in the string that we are trying to cascade. 
 		protected int parkedindex= 0; //The right most index of the letter that parked on the array. 
+		// these two parameters are the same thing. 
+		
+		
 		protected  char[] cascading;		// the sequence of characters we will push when next frame is invoked. 
 		protected char[] current_str; // the string we are looking at. 
 		
@@ -221,14 +225,14 @@ public class Banner implements Runnable{
 		/**
 		 * Run and prepared the next frame. 
 		 */
-		protected void refresh()
+		protected boolean refresh()
 		{
 			//Find the index of the letter that is moving on the banner. 
 			int movingletter = getMovingLeter();
 			//Move the letter by one if it hasn't crashed into the parked index. 
 			{
 				//Move the moving letter
-				if(movingletter!=this.parkedindex)
+				if(movingletter<this.parkedindex)
 				{
 					//Shift the letter one index to the left. 
 					char pre = this.cascading[movingletter-1];
@@ -240,14 +244,24 @@ public class Banner implements Runnable{
 				//increment the parked index and move the next letter. 
 				else
 				{
-					parkedindex++;
-					letterindex++;
-					if(current_str[letterindex]!=' ')
-					cascading[cascading.length-1]=current_str[letterindex];
-					else
-					cascading[parkedindex] = current_str[letterindex];
+					if(parkedindex!=current_str.length-1)
+					{
+						parkedindex++;
+						//letterindex++;
+						if(current_str[parkedindex]!=' ')
+						cascading[cascading.length-1]=current_str[parkedindex];
+						else
+						cascading[parkedindex] = current_str[parkedindex];
+					}
+					//Move onto the next partition if possible, else end the animation. 
+					
+					if(!nextPartition())
+					{
+						return false;
+					}
 				}
 			}
+			return true;
 		}
 		
 		
@@ -265,6 +279,20 @@ public class Banner implements Runnable{
 			return -1;
 		}
 		
+		/**
+		 * 
+		 * @return False if there is no more partition of strings; <br>
+		 * The 
+		 */
+		protected boolean nextPartition()
+		{
+			if(partitionindex== current_str.length-1)
+			{
+				return false;
+			}
+			partitionindex ++;
+			return true; 
+		}
 		
 	
 
@@ -273,6 +301,12 @@ public class Banner implements Runnable{
 			return null;
 		}
 		
+		public String toString()
+		{
+			String s = new String(this.current_str); 
+			s="Current StringFrame:"+s; 
+			return null; 
+		}
 		
 	}
 	
