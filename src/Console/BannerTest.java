@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Console.Banner.LetterCascade;
 import Console.Banner.Sequencer;
 
 public class BannerTest {
@@ -31,8 +32,9 @@ public class BannerTest {
 	@Test
 	public void test() throws Throwable 
 	{
-		test1("This string should contain more than 30 characters. <=exactly 30 character...");
-		test2();
+		//test1("This string should contain more than 30 characters. <=exactly 30 character...");
+		//test2();
+		test3();
 	}
 	
 	public void test1(String s)
@@ -80,6 +82,35 @@ public class BannerTest {
 		char[] w = new char[4];
 		System.out.println(Arrays.toString(w));
 		
+	}
+	
+	
+	/**
+	 * testing: <br>
+	 * <ol>
+	 * <li> Refresh method in Banner cascade class.
+	 * </ol>
+	 */
+	public void test3()
+	{
+		Banner.BannerSequencer t = new Banner.LetterCascade("This is a string. A short one."); 
+		LetterCascade tt = (LetterCascade)t;
+		tt.refresh();
+		println("This is a null character: "+'\0');
+		println(tt);
+		
+		while(true)
+		{
+			String s = tt.nextFrame();
+			if(s==null)break;
+			println(s);
+		}
+	}
+	
+	
+	public static void println(Object o)
+	{
+		System.out.println(o);
 	}
 
 }

@@ -1,5 +1,6 @@
 package Console;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -217,12 +218,14 @@ public class Banner implements Runnable{
 			//setup the other vars in the field: 
 			this.current_str = this.strlist.get(this.partitionindex).toCharArray();
 			this.cascading = new char[Console.WIDTH];
+			Arrays.fill(cascading, ' ');
 			
 		}
 		
 		
 		
-		/**
+		/**--This method is kinda working right---
+		 *<br> <br>
 		 * Run and prepared the next frame. 
 		 */
 		protected boolean refresh()
@@ -230,38 +233,58 @@ public class Banner implements Runnable{
 			//Find the index of the letter that is moving on the banner. 
 			int movingletter = getMovingLeter();
 			//Move the letter by one if it hasn't crashed into the parked index. 
+			
+			//Setting up booleans conditions as variables. 
+			boolean Is_Empty_String = movingletter==-1;
+			boolean Letter_Can_Move = movingletter>parkedindex;
+			boolean Not_Last_Letter = parkedindex<current_str.length-1;
+			
+			if(Is_Empty_String)
 			{
-				//Move the moving letter
-				if(movingletter<this.parkedindex)
+				//The string is empty, which is the case at the beginning. 
+				cascading[cascading.length-1] = current_str[parkedindex];
+			}
+			else if(Letter_Can_Move)
+			{
+				//Shift the letter one index to the left. 
+				char pre = this.cascading[movingletter-1];
+				this.cascading[movingletter-1] = cascading[movingletter];
+				cascading[movingletter] =pre; 
+			}
+			//The letter has been moved to the parked position. 
+			//Skipped the letter if it's a space character. 
+			//increment the parked index and move the next letter. 
+			else
+			{
+				
+				if(Not_Last_Letter)
 				{
-					//Shift the letter one index to the left. 
-					char pre = this.cascading[movingletter-1];
-					this.cascading[movingletter-1] = cascading[movingletter];
-					cascading[movingletter] =pre; 
+					parkedindex++;
+					if(current_str[parkedindex]!=' ')
+					cascading[cascading.length-1]=current_str[parkedindex];
+					else
+					{
+						parkedindex++; // <= Skipping the character. 
+						cascading[cascading.length-1] = current_str[parkedindex];
+					}
 				}
-				//The letter has been moved to the parked position. 
-				//Skipped the letter if it's a space character. 
-				//increment the parked index and move the next letter. 
 				else
 				{
-					if(parkedindex!=current_str.length-1)
-					{
-						parkedindex++;
-						//letterindex++;
-						if(current_str[parkedindex]!=' ')
-						cascading[cascading.length-1]=current_str[parkedindex];
-						else
-						cascading[parkedindex] = current_str[parkedindex];
-					}
-					//Move onto the next partition if possible, else end the animation. 
+					this.cascading = Arrays.copyOf(this.current_str, this.current_str.length);
 					
-					if(!nextPartition())
+					// if there is next partition, move one to the next partition (and return!), if not, just skip
+					if(nextPartition())
 					{
-						return false;
+						current_str = strlist.get(++partitionindex).toCharArray();
+						// leave the old cascading string unchanged...
+						return true;
 					}
+					
 				}
 			}
-			return true;
+			
+			
+			return Not_Last_Letter;
 		}
 		
 		
@@ -272,7 +295,7 @@ public class Banner implements Runnable{
 		 */
 		protected int getMovingLeter()
 		{
-			for(int i = cascading.length;i>=0;i--)
+			for(int i = cascading.length-1;i>=0;i--)
 			{
 				if(cascading[i]!=' ')return i;
 			}
@@ -282,7 +305,10 @@ public class Banner implements Runnable{
 		/**
 		 * 
 		 * @return False if there is no more partition of strings; <br>
-		 * The 
+		 * The method will reset all the parameter in the class<br><br>
+		 * <li>Clearing the string. 
+		 * <li>resetting the parameters
+		 * <li>Returninga boolean to tell the method whether there will be more partition left. 
 		 */
 		protected boolean nextPartition()
 		{
@@ -298,14 +324,14 @@ public class Banner implements Runnable{
 
 		@Override
 		public String nextFrame() {
-			return null;
+			return refresh()?new String(cascading):null;
 		}
 		
 		public String toString()
 		{
-			String s = new String(this.current_str); 
-			s="Current StringFrame:"+s; 
-			return null; 
+			String s ="Current StringFrame:"+ new String(this.current_str); 
+			s+='\n'+"Current Cascading: "+ new String(cascading);
+			return s; 
 		}
 		
 	}
