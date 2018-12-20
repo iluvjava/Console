@@ -93,16 +93,16 @@ public class BannerTest {
 	 */
 	public void test3()
 	{
-		Banner.BannerSequencer t = new Banner.LetterCascade("This is a string. A short one."); 
+		Banner.BannerSequencer t = new Banner.LetterCascade("This is a string. A short one.->That was actually exactly 30 characters in length."); 
 		LetterCascade tt = (LetterCascade)t;
 		tt.refresh();
 		println("This is a null character: "+'\0');
 		println(tt);
 		
-		while(true)
+		for(int i =0; i<=1200;i++)
 		{
 			String s = tt.nextFrame();
-			if(s==null)break;
+			//if(s==null)break;
 			println(s);
 		}
 	}
