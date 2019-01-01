@@ -32,9 +32,9 @@ public class BannerTest {
 	@Test
 	public void test() throws Throwable 
 	{
-		//test1("This string should contain more than 30 characters. <=exactly 30 character...");
-		//test2();
-		test3();
+		test1("This string should contain more than 30 characters. <=exactly 30 character...");
+		test2();
+		//test3();
 	}
 	
 	public void test1(String s)

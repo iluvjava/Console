@@ -20,7 +20,12 @@ public class Banner implements Runnable{
 		
 		Banner b = new Banner(bseq);
 		
-		pause(10000);
+		pause(3000);
+		b.finalize();
+		
+		b = new Banner(new LetterCascade("This is a string, which is a true statement."));
+		pause(5000);
+		
 	}
 
 	private boolean flag = false; // true means stop refreshing. 
@@ -44,7 +49,8 @@ public class Banner implements Runnable{
 		while(!flag)
 		{
 			Console.console.print(sequence.nextFrame());
-			pause(200);
+			Console.console.print(Console.CR);
+			pause(50);
 		}
 	}
 	
@@ -119,18 +125,17 @@ public class Banner implements Runnable{
 		 }
 		 
 		 //Construct and store the sequencer of animation. 
+		//The constructor ensures this will happen. 
 		 private void construct()
 		 {
 			 char[] charlist = source.toCharArray(); 
 			 List<String> res = new LinkedList<>();
-			 
-			 //The constructor ensures this will happen. 
 			 if(this.source.length()>=Console.WIDTH)
 			 {
 				 for(int i = 0; i< charlist.length; i++)
 				 {
 					 StringBuilder sb = new StringBuilder();
-					 for(int j = 0 ; j<charlist.length;j++)
+					 for(int j = 0 ; j<Console.WIDTH;j++)
 					 {
 						 sb.append(charlist[(i+j)%charlist.length]);
 					 }
